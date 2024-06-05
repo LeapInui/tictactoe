@@ -12,9 +12,11 @@ public class TicTacToe {
     JPanel boardPanel = new JPanel();
 
     JButton[][] board = new JButton[3][3];
+
     String playerX = "X";
     String playerO = "O";
     String currentPlayer = playerX;
+    Boolean playerWin = false;
 
     TicTacToe() {
         frame.setSize(boardWidth, boardHeight);
@@ -52,15 +54,18 @@ public class TicTacToe {
 
                 tile.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
+                        if (playerWin) return;
                         JButton tile = (JButton) e.getSource();
-                        
+
                         if (tile.getText() == "") {
                             tile.setText(currentPlayer);
-                        
-                            if (currentPlayer == playerX) {
-                                currentPlayer = playerO;
-                            } else {
-                                currentPlayer = playerX;
+                            
+                            if (!playerWin) {
+                                if (currentPlayer == playerX) {
+                                    currentPlayer = playerO;
+                                } else {
+                                    currentPlayer = playerX;
+                                }
                             }
                         }
                     }
