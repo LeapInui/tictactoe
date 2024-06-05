@@ -9,9 +9,11 @@ public class TicTacToe {
     JFrame frame = new JFrame("Tic Tac Toe");
     JLabel textLabel = new JLabel();
     JPanel topPanel = new JPanel();
+    JPanel bottomPanel = new JPanel();
     JPanel boardPanel = new JPanel();
 
     JButton[][] board = new JButton[3][3];
+    JButton restartButton = new JButton();
 
     String playerX = "X";
     String playerO = "O";
@@ -28,9 +30,20 @@ public class TicTacToe {
         frame.setLayout(new BorderLayout());
         frame.setVisible(true);
 
+        // Add window listener to print termination message when window closes
+        frame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                System.out.println("Tic Tac Toe is closing!");
+            }
+        });
+
         topPanel.setLayout(new BorderLayout());
         topPanel.add(textLabel);
         frame.add(topPanel, BorderLayout.NORTH);
+
+        bottomPanel.setLayout(new BorderLayout());
+        bottomPanel.add(restartButton);
+        frame.add(bottomPanel, BorderLayout.SOUTH);
 
         textLabel.setText("Tic Tac Toe");
         textLabel.setFont(new Font(null, Font.BOLD, 50));
@@ -38,7 +51,26 @@ public class TicTacToe {
         textLabel.setForeground(new Color(178, 112, 250));
         textLabel.setHorizontalAlignment(JLabel.CENTER);
         textLabel.setOpaque(true);
+
+        restartButton.setText("Restart");
+        restartButton.setFont(new Font(null, Font.BOLD, 30));
+        restartButton.setBackground(new Color(20, 0, 84));
+        restartButton.setFocusable(false);
         
+        // Add listener to reset game when restart button is pressed
+        restartButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                playerWin = false;
+                turns = 0;
+                
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        restart(board[i][j]);
+                    }
+                }
+            }
+        });
+
         boardPanel.setLayout(new GridLayout(3, 3));
         boardPanel.setBackground(Color.white);
         frame.add(boardPanel);
@@ -135,6 +167,7 @@ public class TicTacToe {
                 return;
             }
 
+        // If the game is a tie
         if (turns == 9) {
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
@@ -146,15 +179,29 @@ public class TicTacToe {
 
     }
 
+    // Updates text and colour when a player wins
     private void setWinner(JButton tile) {
         tile.setBackground(new Color(72, 55, 168));
         tile.setForeground(Color.yellow);
         textLabel.setText(currentPlayer + " wins!");
     }
 
+    // Updates text and colour if the game is a tie
     private void gameTie(JButton tile) {
         tile.setBackground(new Color(72, 55, 168));
         tile.setForeground(Color.yellow);
         textLabel.setText("Draw!");
+    }
+
+    // Resets the text and colour when restarting
+    private void restart(JButton tile) {
+        tile.setBackground(new Color(20, 0, 84));
+        tile.setText("");
+        textLabel.setText("Tic Tac Toe");
+    }
+
+    public static void main(String[] args) {
+        TicTacToe game = new TicTacToe();
+        System.out.println("Tic Tac Toe is starting!");
     }
 }
