@@ -14,6 +14,14 @@ public class TicTacToe {
 
     JButton[][] board = new JButton[3][3];
     JButton restartButton = new JButton();
+    JButton themeButton = new JButton();
+
+    Color backgroundColour = new Color(255, 249, 196);
+    Color textColour = new Color(207, 185, 151);
+    Color oColour = new Color(255, 105, 97);
+    Color xColour = new Color(167, 199, 231);
+    Color winbgColour = new Color(255, 236, 179);
+    Color winColour = new Color(177, 156, 217);
 
     String playerX = "X";
     String playerO = "O";
@@ -42,27 +50,40 @@ public class TicTacToe {
         frame.add(topPanel, BorderLayout.NORTH);
 
         bottomPanel.setLayout(new BorderLayout());
-        bottomPanel.add(restartButton);
+        bottomPanel.setBackground(backgroundColour);
+        bottomPanel.add(restartButton, BorderLayout.EAST);
+        bottomPanel.add(themeButton, BorderLayout.WEST);
         frame.add(bottomPanel, BorderLayout.SOUTH);
 
         textLabel.setText("Tic Tac Toe");
         textLabel.setFont(new Font(null, Font.BOLD, 50));
-        textLabel.setBackground(new Color(20, 0, 84));
-        textLabel.setForeground(new Color(178, 112, 250));
+        textLabel.setBackground(backgroundColour);
+        textLabel.setForeground(textColour);
         textLabel.setHorizontalAlignment(JLabel.CENTER);
         textLabel.setOpaque(true);
 
-        restartButton.setText("Restart");
+        themeButton.setText(" Themes ");
+        themeButton.setFont(new Font(null, Font.BOLD, 30));
+        themeButton.setBackground(backgroundColour);
+        themeButton.setForeground(textColour);
+        themeButton.setFocusable(false);
+
+        // Add listener for themes
+        themeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                themes();
+            }
+        });
+
+        restartButton.setText(" Restart  ");
         restartButton.setFont(new Font(null, Font.BOLD, 30));
-        restartButton.setBackground(new Color(20, 0, 84));
+        restartButton.setBackground(backgroundColour);
+        restartButton.setForeground(textColour);
         restartButton.setFocusable(false);
         
         // Add listener to reset game when restart button is pressed
         restartButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                playerWin = false;
-                turns = 0;
-                
                 for (int i = 0; i < 3; i++) {
                     for (int j = 0; j < 3; j++) {
                         restart(board[i][j]);
@@ -72,7 +93,7 @@ public class TicTacToe {
         });
 
         boardPanel.setLayout(new GridLayout(3, 3));
-        boardPanel.setBackground(Color.white);
+        boardPanel.setBackground(backgroundColour);
         frame.add(boardPanel);
 
         // Add buttons for 3x3 grid
@@ -83,7 +104,7 @@ public class TicTacToe {
                 boardPanel.add(tile);
 
                 tile.setFont(new Font(null, Font.BOLD, 100));
-                tile.setBackground(new Color(20, 0, 84));
+                tile.setBackground(boardPanel.getBackground());
                 tile.setFocusable(false);
 
                 // Add listener to update tile text
@@ -94,7 +115,7 @@ public class TicTacToe {
 
                         // Ensures that tiles are empty before being updated
                         if (tile.getText() == "") {
-                            tile.setForeground(new Color(112, 213, 250));
+                            tile.setForeground(oColour);
                             tile.setText(currentPlayer);
                             turns++;
                             winCheck();
@@ -102,7 +123,7 @@ public class TicTacToe {
                             // Alternates between player X and O
                             if (!playerWin) {
                                 if (currentPlayer == playerX) {
-                                    tile.setForeground(new Color(223, 112, 250));
+                                    tile.setForeground(xColour);
                                     currentPlayer = playerO;
                                 } else {
                                     currentPlayer = playerX;
@@ -181,23 +202,157 @@ public class TicTacToe {
 
     // Updates text and colour when a player wins
     private void setWinner(JButton tile) {
-        tile.setBackground(new Color(72, 55, 168));
-        tile.setForeground(Color.yellow);
+        tile.setBackground(winbgColour);
+        tile.setForeground(winColour);
         textLabel.setText(currentPlayer + " wins!");
     }
 
     // Updates text and colour if the game is a tie
     private void gameTie(JButton tile) {
-        tile.setBackground(new Color(72, 55, 168));
-        tile.setForeground(Color.yellow);
+        tile.setBackground(winbgColour);
+        tile.setForeground(winColour);
         textLabel.setText("Draw!");
     }
 
     // Resets the text and colour when restarting
     private void restart(JButton tile) {
-        tile.setBackground(new Color(20, 0, 84));
+        playerWin = false;
+        turns = 0;
+        tile.setBackground(backgroundColour);
         tile.setText("");
         textLabel.setText("Tic Tac Toe");
+    }
+
+    // Popup for themes
+    private void themes() {
+        JDialog themeDialog = new JDialog(frame, "Themes", true);
+        JPanel themePanel = new JPanel();
+        JButton theme1Button = new JButton();
+        JButton theme2Button = new JButton();
+        JButton theme3Button = new JButton();
+
+
+        themeDialog.setSize(400, 600);
+        themeDialog.setResizable(false);
+        themeDialog.setLocationRelativeTo(frame);
+        themeDialog.setLayout(new BorderLayout());
+        
+        themePanel.setLayout(new GridLayout(3, 1));
+        themePanel.setBackground(new Color(20, 0, 84));
+        themeDialog.add(themePanel);
+
+        theme1Button.setText("Theme 1");
+        theme1Button.setFont(new Font(null, Font.BOLD, 40));
+        theme1Button.setBackground(backgroundColour);
+        theme1Button.setForeground(textColour);
+        theme1Button.setFocusable(false);
+        themePanel.add(theme1Button);
+
+        theme1Button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                backgroundColour = new Color(255, 249, 196);
+                textColour = new Color(207, 185, 151);
+                oColour = new Color(255, 105, 97);
+                xColour = new Color(167, 199, 231);
+                winbgColour = new Color(255, 236, 179);
+                winColour = new Color(177, 156, 217);
+                themeDialog.dispose();
+
+                bottomPanel.setBackground(backgroundColour);
+                textLabel.setBackground(backgroundColour);
+                themeButton.setBackground(backgroundColour);
+                restartButton.setBackground(backgroundColour);
+                boardPanel.setBackground(backgroundColour);
+
+                textLabel.setForeground(textColour);
+                themeButton.setForeground(textColour);
+                restartButton.setForeground(textColour);
+
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        restart(board[i][j]);
+                        board[i][j].setBackground(backgroundColour);
+                        board[i][j].setForeground(textColour);
+                    }
+                }
+            }
+        });
+
+        theme2Button.setText("Theme 2");
+        theme2Button.setFont(new Font(null, Font.BOLD, 40));
+        theme2Button.setBackground(backgroundColour);
+        theme2Button.setForeground(textColour);
+        theme2Button.setFocusable(false);
+        themePanel.add(theme2Button);
+
+        theme2Button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                backgroundColour = new Color(66, 66, 66);
+                textColour = new Color(255, 255, 255);
+                oColour = new Color(255, 205, 210);
+                xColour = new Color(186, 104, 200);
+                winbgColour = new Color(158, 158, 158);
+                winColour = new Color(13, 71, 161);
+                themeDialog.dispose();
+
+                bottomPanel.setBackground(backgroundColour);
+                textLabel.setBackground(backgroundColour);
+                themeButton.setBackground(backgroundColour);
+                restartButton.setBackground(backgroundColour);
+                boardPanel.setBackground(backgroundColour);
+
+                textLabel.setForeground(textColour);
+                themeButton.setForeground(textColour);
+                restartButton.setForeground(textColour);
+
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        restart(board[i][j]);
+                        board[i][j].setBackground(backgroundColour);
+                        board[i][j].setForeground(textColour);
+                    }
+                }
+            }
+        });
+
+        theme3Button.setText("Theme 3");
+        theme3Button.setFont(new Font(null, Font.BOLD, 40));
+        theme3Button.setBackground(backgroundColour);
+        theme3Button.setForeground(textColour);
+        theme3Button.setFocusable(false);
+        themePanel.add(theme3Button);
+        
+        theme3Button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                backgroundColour = new Color(77, 182, 172);
+                textColour = new Color(0, 137, 123);
+                oColour = new Color(255, 205, 210);
+                xColour = new Color(179, 229, 252);
+                winbgColour = new Color(128, 203, 196);
+                winColour = new Color(255, 224, 130);
+                themeDialog.dispose();
+
+                bottomPanel.setBackground(backgroundColour);
+                textLabel.setBackground(backgroundColour);
+                themeButton.setBackground(backgroundColour);
+                restartButton.setBackground(backgroundColour);
+                boardPanel.setBackground(backgroundColour);
+
+                textLabel.setForeground(textColour);
+                themeButton.setForeground(textColour);
+                restartButton.setForeground(textColour);
+
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+                        restart(board[i][j]);
+                        board[i][j].setBackground(backgroundColour);
+                        board[i][j].setForeground(textColour);
+                    }
+                }
+            }
+        });
+
+        themeDialog.setVisible(true);
     }
 
     public static void main(String[] args) {
