@@ -162,9 +162,7 @@ public class TicTacToe {
                         }
                         playerWin = true;
                         return;
-                    }
-                    
-
+                    }     
             }
         }
 
@@ -178,6 +176,7 @@ public class TicTacToe {
                 playerWin = true;
                 return;
             }
+
         if (board[0][2].getText() != "" &&
             board[0][2].getText() == board[1][1].getText() &&
             board[1][1].getText() == board[2][0].getText()) {
@@ -231,18 +230,17 @@ public class TicTacToe {
         JButton theme2Button = new JButton();
         JButton theme3Button = new JButton();
 
-
-        themeDialog.setSize(400, 600);
+        themeDialog.setSize(400, 300);
         themeDialog.setResizable(false);
         themeDialog.setLocationRelativeTo(frame);
         themeDialog.setLayout(new BorderLayout());
         
-        themePanel.setLayout(new GridLayout(3, 1));
+        themePanel.setLayout(new GridLayout(3, 2));
         themePanel.setBackground(new Color(20, 0, 84));
         themeDialog.add(themePanel);
 
         theme1Button.setText("Theme 1");
-        theme1Button.setFont(new Font(null, Font.BOLD, 40));
+        theme1Button.setFont(new Font(null, Font.BOLD, 30));
         theme1Button.setBackground(backgroundColour);
         theme1Button.setForeground(textColour);
         theme1Button.setFocusable(false);
@@ -278,8 +276,12 @@ public class TicTacToe {
             }
         });
 
+        ImageIcon image1 = new ImageIcon("img/theme1.png");
+        JLabel imageLabel1 = new JLabel(image1);
+        themePanel.add(imageLabel1);
+
         theme2Button.setText("Theme 2");
-        theme2Button.setFont(new Font(null, Font.BOLD, 40));
+        theme2Button.setFont(new Font(null, Font.BOLD, 30));
         theme2Button.setBackground(backgroundColour);
         theme2Button.setForeground(textColour);
         theme2Button.setFocusable(false);
@@ -315,8 +317,12 @@ public class TicTacToe {
             }
         });
 
+        ImageIcon image2 = new ImageIcon("img/theme2.png");
+        JLabel imageLabel2 = new JLabel(image2);
+        themePanel.add(imageLabel2);
+
         theme3Button.setText("Theme 3");
-        theme3Button.setFont(new Font(null, Font.BOLD, 40));
+        theme3Button.setFont(new Font(null, Font.BOLD, 30));
         theme3Button.setBackground(backgroundColour);
         theme3Button.setForeground(textColour);
         theme3Button.setFocusable(false);
@@ -351,6 +357,10 @@ public class TicTacToe {
                 }
             }
         });
+        
+        ImageIcon image3 = new ImageIcon("img/theme3.png");
+        JLabel imageLabel3 = new JLabel(image3);
+        themePanel.add(imageLabel3);
 
         themeDialog.setVisible(true);
     }
