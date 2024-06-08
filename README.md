@@ -1,6 +1,6 @@
 # Tic Tac Toe
 Tic Tac Toe game coded in Java
-GUI is created using the swing and awt library and the actual board is implemented using a 2D array of buttons
+GUI is created using the swing and awt library and the actual board is implemented using a 2D array of buttons  
 I did follow this [tutorial](https://www.youtube.com/watch?v=Nc77ymnm8Ss) to get a grasp of awt and swing (might just stick to JavaFX in the future)  
 The tutorial wasn't followed exactly and I also added myself:
 - a restart button
